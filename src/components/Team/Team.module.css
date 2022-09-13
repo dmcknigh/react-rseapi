@@ -1,0 +1,92 @@
+
+.control {
+  margin-bottom: 0.5rem;
+}
+
+.control label {
+  display: block;
+  color: white;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.control input {
+  font: inherit;
+  background-color: #110f12;
+  color: #d4cde3;
+  border-radius: 4px;
+  border: 1px solid white;
+  width: 100%;
+  text-align: left;
+  padding: 0.25rem;
+  grid-gap: 50px;
+}
+
+.table {
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  border: 1px solid #0e0d0f;
+  table-layout: auto;
+}
+
+.row {
+  font-size: 14px;
+  height: 70px;
+}
+
+.form {
+  width: 95%;
+  max-width: 70rem;
+  margin: 2rem auto;
+}
+
+.actions {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.actions button {
+  cursor: pointer;
+  font: inherit;
+  color: white;
+  background-color: #172288;
+  border: 1px solid #45464d;
+  border-radius: 4px;
+  padding: 0.5rem 2.5rem;
+}
+
+.actions button:hover {
+  background-color: #040d58;
+  border-color: #040d58;
+}
+
+.actions .toggle {
+  margin-top: 1rem;
+  background-color: transparent;
+  color: #040d58;
+  border: none;
+  padding: 0.15rem 1.5rem;
+}
+
+.actions .toggle:hover {
+  background-color: transparent;
+  color: #040d58;
+}
+
+.containers {
+  width: 100%;
+  height: 600px;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-size: 12px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: left;
+  background-color: #0f1311;
+  text-align: left;
+}

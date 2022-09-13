@@ -1,0 +1,90 @@
+.form {
+  width: 95%;
+  max-width: 70rem;
+  margin: 2rem auto;
+}
+
+.control {
+  margin-bottom: 0.5rem;
+}
+
+.control label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #353336;
+  display: block;
+}
+
+.control input {
+  display: block;
+  font: inherit;
+  width: 100%;
+  border-radius: 4px;
+  border: 1px solid #38015c;
+  padding: 0.25rem;
+  background-color: #f7f0fa;
+}
+
+.action {
+  margin-top: 1.5rem;
+}
+
+.action button {
+  font: inherit;
+  cursor: pointer;
+  padding: 0.5rem 1.5rem;
+  border-radius: 4px;
+  background-color: #01125c;
+  color: white;
+  border: 1px solid #9b8ba5;
+}
+
+.action button:hover {
+  background-color: #540d83;
+  border-color: #540d83;
+}
+
+.table {
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+  border: 1px solid #38015c;
+  table-layout: fixed;
+}
+
+thead th:nth-child(1) {
+  width: 4%;
+}
+
+thead th:nth-child(2) {
+  width: 30%;
+}
+
+thead th:nth-child(3) {
+  width: 15%;
+}
+
+thead th:nth-child(4) {
+  width: 45%;
+}
+
+th, td {
+  padding: 20px;
+}
+
+thead th, tfoot th, tfoot td {
+  background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.5));
+  border: 3px solid purple;
+}
+
+.rowC{display:flex; flex-direction:row;}
+
+.fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  overflow: auto;
+  background: lime; /* Just to visualize the extent */ 
+}
