@@ -1,5 +1,4 @@
-import React from 'react'
-import { Fragment } from 'react'
+import React, { Fragment } from 'react'
 import { useLocation } from 'react-router-dom'
 import AuthForm from '../components/Auth/AuthForm'
 

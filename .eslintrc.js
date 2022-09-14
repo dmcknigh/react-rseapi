@@ -1,21 +1,34 @@
-module.exports = {
+module.export = {
   env: {
+    commonjs: true,
+    node: true,
     browser: true,
-    es2021: true,
+    es6: true,
+    jest: true,
   },
-  extends: ["eslint:recommended", "plugin:react/recommended", "prettier"],
+  extends: ['eslint:recommended', 'plugin:react/recommended', 'prettier'],
   overrides: [],
   parserOptions: {
-    ecmaVersion: "latest",
-    sourceType: "module",
+    ecmaFeatures: {
+      jsx: true,
+    },
+    ecmaVersion: 'latest',
+    sourceType: 'module',
   },
-  plugins: ["react", "react-hooks", "@typescript-eslint", "prettier"],
+  plugins: ['react', 'react-hooks', '@typescript-eslint', 'prettier'],
   rules: {
-    "react/react-in-jsx-scope": "off",
-    camelcase: "error",
-    "spaced-comment": "error",
-    quotes: ["error", "single"],
-    "no-duplicate-imports": "error",
-    "no-unused-vars": "warn",
+    'camelcase': 'error',
+    'no-duplicate-imports': 'error',
+    'no-unused-vars': 'warn',
+    'quotes': ['error', 'single'],
+    'react/no-unknown-property': 'warn',
+    'react/prop-types': 0,
+    'react/react-in-jsx-scope': 'off',
+    'spaced-comment': 'error',
   },
-};
+  settings: {
+    react: {
+      version: 'latest', // "detect" automatically picks the version you have installed.
+    },
+  },
+}
