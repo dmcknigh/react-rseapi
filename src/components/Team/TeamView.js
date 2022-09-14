@@ -97,7 +97,7 @@ const TeamView = () => {
             {messages?.map((message, id) => {
               const date = new Date(message['time(ms)'])
               return (
-                <tr key={id} scope='row' className='bg-white border-b hover:bg-blue-500 hover:text-white'>
+                <tr key={id} scope='row' className='bg-white border-b hover:bg-gray-100'>
                   <td scope='col' className='py-4 px-6'>
                     {message.user}
                   </td>
