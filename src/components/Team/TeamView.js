@@ -82,7 +82,7 @@ const TeamView = () => {
     <Card>
       <div className='flex flex-col h-96 overflow-y-auto scroll-smooth'>
         <table className='table-auto w-full text-sm text-left text-gray-500'>
-          <thead className='bg-blue-500 text-white text-left text-xs uppercase '>
+          <thead className='bg-blue-500 text-white text-left text-xs uppercase sticky top-0'>
             <tr>
               {columns.map((column, id) => {
                 return (
