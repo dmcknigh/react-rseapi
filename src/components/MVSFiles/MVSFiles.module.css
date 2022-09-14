@@ -44,7 +44,7 @@
   border-color: #540d83;
 }
 
-.table {
+/* .table {
   margin-left: auto;
   margin-right: auto;
   width: 100%;
@@ -77,7 +77,7 @@ thead th, tfoot th, tfoot td {
   border: 3px solid purple;
 }
 
-.rowC{display:flex; flex-direction:row;}
+.rowC{display:flex; flex-direction:row;} */
 
 .fullscreen {
   position: fixed;
@@ -86,5 +86,5 @@ thead th, tfoot th, tfoot td {
   bottom: 0;
   right: 0;
   overflow: auto;
-  background: lime; /* Just to visualize the extent */ 
+  background: lime; /* Just to visualize the extent */
 }

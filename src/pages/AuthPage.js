@@ -1,16 +1,16 @@
-import React from "react";
-import { Fragment } from "react";
-import { useLocation } from "react-router-dom";
-import AuthForm from "../components/Auth/AuthForm";
+import React from 'react'
+import { Fragment } from 'react'
+import { useLocation } from 'react-router-dom'
+import AuthForm from '../components/Auth/AuthForm'
 
 const AuthPage = () => {
-  const location = useLocation();
+  const location = useLocation()
 
-  let resourceId = null;
-  const { state } = location;
+  let resourceId = null
+  const { state } = location
   if (state) {
-    console.log("id:" + state.resourceId);
-    resourceId = state.resourceId;
+    console.log('id:' + state.resourceId)
+    resourceId = state.resourceId
   }
 
   return (
@@ -18,7 +18,7 @@ const AuthPage = () => {
     <Fragment>
       <AuthForm qpath={resourceId} />
     </Fragment>
-  );
-};
+  )
+}
 
-export default AuthPage;
+export default AuthPage

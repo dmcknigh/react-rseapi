@@ -1,98 +1,136 @@
-import React, { useState, useRef, useEffect, useContext } from "react";
-import Card from "../Layout/Card";
-import { fetchContent, putContent } from "../../util/common-properties-service";
-import AuthContext from "../../store/auth-context";
-import classes from "./Team.module.css";
-import Table from "rc-table";
+// Built-in Dependencies
+import React, { useState, useRef, useEffect, useContext } from 'react'
 
-const NAMESPACE = "messages";
-const JPATH = "/messages";
+// Internal Dependencies
+import Card from '../Layout/Card'
 
-const TeamView = (props) => {
+// Redux
+import AuthContext from '../../store/auth-context'
+
+// Utilities
+import { fetchContent, putContent } from '../../util/common-properties-service'
+
+// Constants
+const NAMESPACE = 'messages'
+const JPATH = '/messages'
+
+const TeamView = () => {
   const columns = [
     {
-      title: "User",
-      dataIndex: "user",
-      key: "user",
+      title: 'User',
+      dataIndex: 'user',
+      key: 'user',
       width: 50,
     },
     {
-      title: "Message",
-      dataIndex: "message",
-      key: "message",
+      title: 'Message',
+      dataIndex: 'message',
+      key: 'message',
       width: 800,
     },
-    /*
+
     {
-      title: "Time",
-      dataIndex: "time(ms)",
-      key: "time(ms)",
+      title: 'Time',
+      dataIndex: 'time(ms)',
+      key: 'time(ms)',
       width: 100,
     },
-    */
-  ];
+  ]
 
-  const [messages, setMessages] = useState("");
-  const authCtx = useContext(AuthContext);
-  const userMessageRef = useRef();
+  // Component State
+  const [messages, setMessages] = useState([])
+
+  // Context
+  const authCtx = useContext(AuthContext)
+
+  // Refs
+  const lastMsg = useRef(null)
+  const userMessageRef = useRef()
 
   useEffect(() => {
     const callFetchMessages = async () => {
-      const response = await fetchContent(NAMESPACE, JPATH, authCtx);
-      const data = await response.json();
-      setMessages(data);
-    };
+      const response = await fetchContent(NAMESPACE, JPATH, authCtx)
+      const data = await response.json()
+      setMessages(data)
+    }
 
-    callFetchMessages();
-  }, [authCtx]);
+    callFetchMessages()
+  }, [authCtx])
 
-  const onSendMessage = (event) => {
-    const msg = userMessageRef.current.value;
-    const t = new Date().getTime();
+  // Scroll to the bottom of the message list
+  useEffect(() => {
+    lastMsg.current?.scrollIntoView({ behavior: 'smooth' })
+  })
 
-    const msgJSON = { user: authCtx.userId, message: msg, "time(ms)": t };
-    const newMessages = [...messages, msgJSON];
-    setMessages(newMessages);
+  const onSendMessage = event => {
+    const msg = userMessageRef.current.value
+    const t = new Date().getTime()
 
-    const msgContainer = { messages: newMessages };
+    const msgJSON = { 'user': authCtx.userId, 'message': msg, 'time(ms)': t }
+    const newMessages = [...messages, msgJSON]
+    setMessages(newMessages)
+
+    const msgContainer = { messages: newMessages }
 
     // call send API
-    putContent(NAMESPACE, "/", msgContainer, authCtx);
+    putContent(NAMESPACE, '/', msgContainer, authCtx)
 
-    userMessageRef.current.value = "";
-  };
-
-  const layoutStyle = { display: "grid", gridTemplateRows: "2fr 0.1fr" };
-  const inputStyle = { display: "grid", gridTemplateColumns: "4fr 1fr" };
-  const tableStyle = {}; // { display: "grid", height: 200, width: "100%" };
+    userMessageRef.current.value = ''
+  }
 
   return (
     <Card>
-      <div className={classes.control}>
-        <div style={layoutStyle}>
-          <div className={classes.containers}>
-            <Table
-              columns={columns}
-              data={messages}
-              tableLayout="auto"
-              useFixedHeader={false}
-              scroll={{ x: false, y: 500 }}
-            />
-          </div>
-          <div style={inputStyle}>
-            <input
-              className={classes.input}
-              type="text"
-              id="text"
-              required
-              ref={userMessageRef}
-            />
-            <button onClick={onSendMessage}>Send Message</button>
-          </div>
-        </div>
+      <div className='flex flex-col h-96 overflow-y-auto scroll-smooth'>
+        <table className='table-auto w-full text-sm text-left text-gray-500'>
+          <thead className='bg-blue-500 text-white text-left text-xs uppercase '>
+            <tr>
+              {columns.map((column, id) => {
+                return (
+                  <th key={id} scope='col' className='py-3 px-6'>
+                    {column.title}
+                  </th>
+                )
+              })}
+            </tr>
+          </thead>
+          <tbody>
+            {messages?.map((message, id) => {
+              const date = new Date(message['time(ms)'])
+              return (
+                <tr key={id} scope='row' className='bg-white border-b hover:bg-blue-500 hover:text-white'>
+                  <td scope='col' className='py-4 px-6'>
+                    {message.user}
+                  </td>
+                  <td scope='col' className='py-4 px-6'>
+                    {message.message}
+                  </td>
+                  <td scope='col' className='py-4 px-6'>
+                    {date?.toLocaleString('en-US')}
+                  </td>
+                </tr>
+              )
+            })}
+            <tr>
+              <td ref={lastMsg}></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div className='flex justify-between items-center mt-4'>
+        <input
+          id='text'
+          className='w-full py-2 pl-4 border-white rounded-md bg-black text-white'
+          autoComplete='off'
+          ref={userMessageRef}
+          required
+          type='text'
+        />
+        <button className='ml-8 py-2 px-4 border-white rounded-md bg-blue-500 text-sm text-white' onClick={onSendMessage}>
+          Send Message
+        </button>
       </div>
     </Card>
-  );
-};
+  )
+}
 
-export default TeamView;
+export default TeamView

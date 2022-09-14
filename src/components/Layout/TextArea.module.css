@@ -1,7 +1,6 @@
-textarea  
-{  
-   font-family:"Courier New", "Consolas", serif;  
-   font-size: 14px;  
-   color: white;
-   background-color: rgb(8, 7, 7); 
+textarea {
+  font-family: 'Courier New', 'Consolas', serif;
+  font-size: 14px;
+  color: white;
+  background-color: rgb(8, 7, 7);
 }

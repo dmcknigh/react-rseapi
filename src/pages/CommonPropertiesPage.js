@@ -1,15 +1,15 @@
-import React from "react";
-import { Fragment } from "react";
-import CommonProperties from "../components/CommonProperties/CommonProperties";
+import React from 'react'
+import { Fragment } from 'react'
+import CommonProperties from '../components/CommonProperties/CommonProperties'
 
 const CommonPropertiesPage = () => {
-  console.log("common properties page");
+  console.log('common properties page')
 
   return (
     <Fragment>
       <CommonProperties />
     </Fragment>
-  );
-};
+  )
+}
 
-export default CommonPropertiesPage;
+export default CommonPropertiesPage

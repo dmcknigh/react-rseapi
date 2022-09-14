@@ -1,6 +1,6 @@
-import React from "react";
-import ProfileForm from "./ProfileForm";
-import classes from "./UserProfile.module.css";
+import React from 'react'
+import ProfileForm from './ProfileForm'
+import classes from './UserProfile.module.css'
 
 const UserProfile = () => {
   return (
@@ -8,7 +8,7 @@ const UserProfile = () => {
       <h2>Account</h2>
       <ProfileForm />
     </section>
-  );
-};
+  )
+}
 
-export default UserProfile;
+export default UserProfile

@@ -44,7 +44,7 @@
   border-color: #540d83;
 }
 
-.table {
+/* .table {
   margin-left: auto;
   margin-right: auto;
   width: 100%;
@@ -75,6 +75,9 @@ th, td {
 thead th, tfoot th, tfoot td {
   background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.5));
   border: 3px solid purple;
-}
+} */
 
-.rowC{display:flex; flex-direction:row;}
+.rowC {
+  display: flex;
+  flex-direction: row;
+}

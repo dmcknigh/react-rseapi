@@ -55,5 +55,5 @@
 }
 
 .selected {
-  color: red;
+  color: red !important;
 }

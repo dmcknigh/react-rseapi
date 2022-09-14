@@ -1,8 +1,8 @@
-import React from "react";
-import StartingPageContent from "../components/StartingPage/StartingPageContent";
+import React from 'react'
+import StartingPageContent from '../components/StartingPage/StartingPageContent'
 
 const HomePage = () => {
-  return <StartingPageContent />;
-};
+  return <StartingPageContent />
+}
 
-export default HomePage;
+export default HomePage
