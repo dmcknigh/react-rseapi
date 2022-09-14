@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React from 'react'
 import { useParams } from 'react-router-dom'
 import UnixFiles from '../components/UnixFiles/UnixFiles'
 
@@ -13,9 +13,8 @@ const UnixFilesPage = () => {
 
   return (
     // uses routing to determine whether we should show "Load comments" or not
-    <Fragment>
-      <UnixFiles qpath={resourceId} />
-    </Fragment>
+
+    <UnixFiles qpath={resourceId} />
   )
 }
 

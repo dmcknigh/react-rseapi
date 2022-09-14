@@ -8,7 +8,7 @@ const CommonProperties = () => {
 
   return (
     <section className={classes.form}>
-      <h1>Common Properties Explorer</h1>
+      <h1 className='mb-4 pl-6 text-4xl text-black tracking-wide uppercase'>Common Properties Explorer</h1>
       <Card>
         <CommonPropetiesTree />
       </Card>

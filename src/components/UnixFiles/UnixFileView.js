@@ -57,8 +57,8 @@ const UnixFileView = props => {
   }
 
   return (
-    <Card>
-      <div className='mb-4'>
+    <div className='flex flex-col flex-container m-2 p-8 bg-white rounded-lg w-full'>
+      <div className='mb-4 w-100'>
         <div className='flex flex-col my-2'>
           <div className='flex justify-end'>
             <button className='mx-4' type='checkbox' onClick={props.onToggleFullEdit}>
@@ -76,7 +76,7 @@ const UnixFileView = props => {
           <TextArea content={content}></TextArea>
         </div>
       </div>
-    </Card>
+    </div>
   )
 }
 

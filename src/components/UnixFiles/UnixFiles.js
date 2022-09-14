@@ -37,9 +37,9 @@ const UnixFiles = props => {
   const layoutStyle = fullEdit ? {} : { display: 'grid', gridTemplateColumns: '1fr 2fr' }
 
   return (
-    <section className={classes.form}>
-      <h1>UNIX Files</h1>
-      <div style={layoutStyle}>
+    <section className="flex flex-col">
+      <h1 className='mb-4 pl-6 text-4xl text-black tracking-wide uppercase'>UNIX Files</h1>
+      <div className='flex'>
         {!fullEdit && (
           <Card>
             <UnixFilesTree container={selectedContainer} onFileSelected={fileSelected} />
