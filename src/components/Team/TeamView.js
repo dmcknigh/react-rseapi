@@ -62,7 +62,7 @@ const TeamView = () => {
     lastMsg.current?.scrollIntoView({ behavior: 'smooth' })
   })
 
-  const onSendMessage = event => {
+  const onSendMessage = () => {
     const msg = userMessageRef.current.value
     const t = new Date().getTime()
 
@@ -75,6 +75,14 @@ const TeamView = () => {
     // call send API
     putContent(NAMESPACE, '/', msgContainer, authCtx)
 
+    const callFetchMessages = async () => {
+      const response = await fetchContent(NAMESPACE, JPATH, authCtx)
+      const data = await response.json()
+      setMessages(data)
+    }
+
+    callFetchMessages()
+
     userMessageRef.current.value = ''
   }
 
@@ -84,32 +92,35 @@ const TeamView = () => {
         <table className='table-auto w-full text-sm text-left text-gray-500'>
           <thead className='bg-blue-500 text-white text-left text-xs uppercase sticky top-0'>
             <tr>
-              {columns.map((column, id) => {
-                return (
-                  <th key={id} scope='col' className='py-3 px-6'>
-                    {column.title}
-                  </th>
-                )
-              })}
+              {columns &&
+                columns.map((column, id) => {
+                  return (
+                    <th key={id} scope='col' className='py-3 px-6'>
+                      {column.title}
+                    </th>
+                  )
+                })}
             </tr>
           </thead>
           <tbody>
-            {messages?.map((message, id) => {
-              const date = new Date(message['time(ms)'])
-              return (
-                <tr key={id} scope='row' className='bg-white border-b hover:bg-gray-100'>
-                  <td scope='col' className='py-4 px-6'>
-                    {message.user}
-                  </td>
-                  <td scope='col' className='py-4 px-6'>
-                    {message.message}
-                  </td>
-                  <td scope='col' className='py-4 px-6'>
-                    {date?.toLocaleString('en-US')}
-                  </td>
-                </tr>
-              )
-            })}
+            {messages &&
+              messages.length > 1 &&
+              messages?.map((message, id) => {
+                const date = new Date(message['time(ms)'])
+                return (
+                  <tr key={id} scope='row' className='bg-white border-b hover:bg-gray-100'>
+                    <td scope='col' className='py-4 px-6'>
+                      {message.user}
+                    </td>
+                    <td scope='col' className='py-4 px-6'>
+                      {message.message}
+                    </td>
+                    <td scope='col' className='py-4 px-6'>
+                      {date?.toLocaleString('en-US')}
+                    </td>
+                  </tr>
+                )
+              })}
             <tr>
               <td ref={lastMsg}></td>
             </tr>
