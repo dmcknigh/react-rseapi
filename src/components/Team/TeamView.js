@@ -53,7 +53,6 @@ const TeamView = () => {
       const data = await response.json()
       setMessages(data)
     }
-
     callFetchMessages()
   }, [authCtx])
 
