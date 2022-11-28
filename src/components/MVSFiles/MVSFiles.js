@@ -38,9 +38,10 @@ const MVSFiles = props => {
   const layoutStyle = fullEdit ? {} : { display: 'grid', gridTemplateColumns: '1fr 2fr' }
 
   return (
-    <section className={classes.form}>
-      <h1>MVS Files</h1>
-      <div style={layoutStyle}>
+ 
+  <section className="flex flex-col">
+      <h1 className='mb-4 pl-6 text-4xl text-black tracking-wide uppercase'>MVS Files</h1>
+      <div className='flex'>
         {!fullEdit && (
           <Card>
             <MVSFilesTree container={selectedContainer} onFileSelected={fileSelected} />

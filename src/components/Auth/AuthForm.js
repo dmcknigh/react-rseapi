@@ -7,7 +7,7 @@ import { DEFAULT_HOSTNAME, DEFAULT_PORT, DEFAULT_SECURE } from '../../common/con
 
 import classes from './AuthForm.module.css'
 
-const USE_DEFAULT_SERVER = true
+const USE_DEFAULT_SERVER = false
 
 const retrieveStoredHostState = () => {
   let hostName = localStorage.getItem('hostName')
