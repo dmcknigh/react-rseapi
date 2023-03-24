@@ -26,8 +26,10 @@ function App(props) {
     <Layout>
       <Switch>
         <Route path='/' exact>
-          <HomePage />
-        </Route>
+           {!authCtx.isLoggedIn && <Redirect to='/auth' />}
+           {authCtx.isLoggedIn && <Redirect to='/unixfiles' />}
+         </Route>
+
         {!authCtx.isLoggedIn && (
           <Route path='/auth'>
             <AuthPage />
