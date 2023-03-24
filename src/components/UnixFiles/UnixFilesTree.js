@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext, useRef } from 'react'
 import Tree from 'rc-tree'
 import 'rc-tree/assets/index.css'
 import AuthContext from '../../store/auth-context'
-import { fetchFiles } from '../../util/file-service'
+import { fetchFiles, fetchArchiveFiles } from '../../util/file-service'
 import classes from './UnixFiles.module.css'
 
 const getPendingChild = keyValue => {
@@ -70,6 +70,7 @@ const UnixFilesTree = props => {
             title: fileData.name,
             type: fileData.type,
             size: fileData.size,
+            archive: null,
             children: [getPendingChild(fileData.link)],
             lastModified: fileData.lastModified,
           }
@@ -150,7 +151,23 @@ const UnixFilesTree = props => {
     console.log('node path=' + nodePath)
 
     const callFetchFiles = async () => {
-      const response = await fetchFiles(nodePath, authCtx)
+      let response = null;
+
+      let relPath = '/'
+      console.log('nodePath='+nodePath)
+      let isArchiveResource = node.type === 'ARCHIVE';// || node.archive !== null;
+
+      if (isArchiveResource){
+        if (node.type === 'ARCHIVE'){
+          response = await fetchArchiveFiles(nodePath, relPath, authCtx)
+        }
+        else {
+          response = await fetchArchiveFiles(node.archive, node.name, authCtx)
+        }
+      }
+      else {
+        response = await fetchFiles(nodePath, authCtx)
+      }
       const data = await response.json()
       if (!data.children) {
         node.children = null
@@ -159,14 +176,39 @@ const UnixFilesTree = props => {
         return
       }
 
+
       const transformedResults = data.children.map(fileData => {
+        let fileKey = nodePath + fileData.name;
+        let parentPath = nodePath;
+        if (isArchiveResource){
+          if (fileData.type === 'DIRECTORY'){
+            fileData.type = 'VIRTUAL_DIRECTORY'
+          }
+          if (node.archive !== null){
+            fileData.archive = node.archive;
+          }
+          else {
+            fileData.archive = nodePath;
+          }
+          fileKey = fileData.archive + '/' + fileData.name;
+          parentPath = '/'
+        }
+        else {
+          if (fileData.name.endsWith('zip') || fileData.name.endsWith('jar')){
+           fileData.type = 'ARCHIVE'
+         }
+         else {
+          fileData.archive = null;
+         }
+        }
+
         return {
-          parent: nodePath,
-          key: nodePath + fileData.name,
+          parent: parentPath,
+          key: fileKey,
           title: fileData.name,
           type: fileData.type,
           size: fileData.size,
-          children: fileData.type === 'DIRECTORY' ? [getPendingChild(fileData.link)] : null,
+          children: (fileData.type === 'DIRECTORY' || fileData.type === 'ARCHIVE' || fileData.type === 'VIRTUAL_DIRECTORY') ? [getPendingChild(fileData.link)] : null,
           lastModified: fileData.lastModified,
         }
       })

@@ -5,8 +5,8 @@ import AuthContext from '../../store/auth-context'
 import { fetchContent, fetchNamespaces } from '../../util/common-properties-service'
 import classes from './CommonProperties.module.css'
 
-import { FcFilingCabinet } from 'react-icons/fc'
-import { SiJson } from 'react-icons/si'
+import { FcViewDetails, FcGenealogy } from 'react-icons/fc'
+
 
 const getPendingChild = keyValue => {
   return {
@@ -209,7 +209,7 @@ const CommonPropertiesTree = () => {
         console.log('pathValueKey=' + pathValue)
         return {
           key: pathValue,
-          icon: <SiJson color="blue" />,
+          icon: <FcViewDetails />,
           parent: parent,
           namespace: namespace,
           isArrayIndex: isArrayIndex,
@@ -232,7 +232,7 @@ const CommonPropertiesTree = () => {
 
   return (
     <Tree
-      icon={<FcFilingCabinet />}
+      icon={<FcGenealogy />}
       allowDrop={allowDrop}
       onExpand={onExpand}
       draggable

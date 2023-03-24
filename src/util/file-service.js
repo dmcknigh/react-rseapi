@@ -52,3 +52,29 @@ export const fetchFileContent = (path, authCtx) => {
     alert(error.message)
   }
 }
+
+export const fetchArchiveFiles = (apath, rpath, authCtx) => {
+  const JWT = authCtx.token
+  const filePath = escapePath(apath)
+  const relPath = escapePath(rpath);
+
+  const queryURL = getURL(authCtx.hostName, authCtx.port, authCtx.isSecure, '/unixfiles/archives?archivePath=' + filePath + '&relativePath='+ relPath)
+
+  console.log('queryURL=' + queryURL)
+  try {
+    const response = fetch(queryURL, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'authorization': JWT,
+      },
+    })
+
+    console.log('response:' + response)
+    return response
+  } catch (error) {
+    console.log('error: ' + error)
+    alert(error.message)
+  }
+}

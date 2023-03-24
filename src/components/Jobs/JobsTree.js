@@ -5,6 +5,8 @@ import AuthContext from '../../store/auth-context'
 import { fetchJobs, fetchJobSpools } from '../../util/jobs-service'
 import classes from './Jobs.module.css'
 
+import { FcServices, FcDocument, FcOk, FcHighPriority } from 'react-icons/fc'
+
 const getPendingChild = keyValue => {
   return {
     key: keyValue,
@@ -47,9 +49,19 @@ const JobsTree = props => {
 
       const transformedResults = data.items.map(jobData => {
         console.log('job id=' + jobData.jobId)
+        console.log('job status='+jobData.status)
         const title = jobData.jobName + ':' + jobData.jobId
+        let icon = <FcServices />
+        if (jobData.status==='COMPLETED'){
+          icon = <FcOk />
+        }
+        else if (jobData.status==='ABEND'){
+          icon = <FcHighPriority />
+        }
+
         return {
           key: title,
+          icon: icon,
           type: 'JOB',
           title: title,
           status: jobData.status,
@@ -102,6 +114,7 @@ const JobsTree = props => {
         console.log('spool id=' + jobSpoolData.id)
         return {
           key: jobName + ':' + jobId + '/' + jobSpoolData.id,
+          icon: <FcDocument />,
           type: 'SPOOL',
           jobId: jobId,
           jobName: jobName,
@@ -159,6 +172,7 @@ const JobsTree = props => {
       </div>
       <div className='draggable-demo'>
         <Tree
+          icon={<FcServices />}
           allowDrop={allowDrop}
           onExpand={onExpand}
           onSelect={onSelect}
