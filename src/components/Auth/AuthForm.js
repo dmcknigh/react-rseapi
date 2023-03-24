@@ -55,6 +55,9 @@ const AuthForm = props => {
     const enteredHostName = hostNameInputRef.current.value.trim()
     const enteredPort = portInputRef.current.value.trim()
     const enteredIsSecure = secureInputRef.current.value
+    if (!enteredIsSecure){
+      enteredIsSecure = true
+    }
     const enteredUserID = userIDInputRef.current.value
     const enteredPassword = passwordInputRef.current.value
 
