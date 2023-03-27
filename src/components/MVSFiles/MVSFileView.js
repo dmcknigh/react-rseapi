@@ -43,7 +43,7 @@ const MVSFileView = props => {
     }
 
     callFetchFileContent()
-  }, [path, authCtx])
+  }, [path, props.selected, authCtx])
 
   const onContentChange = event => {}
 

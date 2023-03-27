@@ -55,7 +55,9 @@ const UnixFilesTree = props => {
 
     const callFetchFiles = async () => {
       try {
+        console.log('calling fetch...'+path)
         const response = await fetchFiles(path, authCtx)
+        console.log('...called fetch'+path)
         if (!response.ok) {
           console.log('failed query!')
           throw new Error('Something went wrong!')
@@ -63,8 +65,6 @@ const UnixFilesTree = props => {
         const data = await response.json()
         console.log('unix query response data:' + data)
         const transformedResults = data.children.map(fileData => {
-          console.log('file.name='+fileData.name)
-          console.log('file.type='+fileData.type)
           let keyValue = path + fileData.name
           return {
             parent: path,
@@ -73,7 +73,7 @@ const UnixFilesTree = props => {
             type: fileData.type,
             size: fileData.size,
             archive: null,
-            children: (fileData.type === 'DIRECTORY') ? [getPendingChild(fileData.link)] : null,
+            children: (fileData.type === 'DIRECTORY') ? [getPendingChild(keyValue+'/*')] : null,
             lastModified: fileData.lastModified,
           }
         })
@@ -161,14 +161,6 @@ const UnixFilesTree = props => {
       response = await fetchFiles(nodePath, authCtx)
 
       const data = await response.json()
-      /*
-      if (!data.children) {
-        node.children = null
-        node.type = 'DIRECTORY'
-        setFetchedFiles(updatedFiles)
-        return
-      }
-*/
 
       const transformedResults = data.children.map(fileData => {
         let fileKey = nodePath + fileData.name;
@@ -181,7 +173,7 @@ const UnixFilesTree = props => {
           title: fileData.name,
           type: fileData.type,
           size: fileData.size,
-          children: (fileData.type === 'DIRECTORY') ? [getPendingChild(fileData.link)] : null,
+          children: (fileData.type === 'DIRECTORY') ? [getPendingChild(fileKey+'/*')] : null,
           lastModified: fileData.lastModified,
         }
       })

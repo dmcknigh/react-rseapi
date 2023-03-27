@@ -23,6 +23,13 @@ const MVSFiles = props => {
 
   const [fullEdit, setFullEdit] = useState(false)
 
+  useEffect (() => {
+    let defaultFilter = props.qpath;
+    defaultFilter = defaultFilter.replaceAll('_', '/').toUpperCase()
+
+    fileSelected(defaultFilter)
+  }, [props.qpath])
+
   const fileSelected = path => {
     console.log('file selected:' + path)
     setSelectedFile(path)
@@ -31,8 +38,6 @@ const MVSFiles = props => {
   const onToggleFullEdit = () => {
     setFullEdit(!fullEdit)
   }
-
-  const layoutStyle = fullEdit ? {} : { display: 'grid', gridTemplateColumns: '1fr 2fr' }
 
   console.log('selectedContainer='+selectedContainer)
   return (

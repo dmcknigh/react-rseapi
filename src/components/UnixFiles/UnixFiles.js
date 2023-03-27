@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import classes from './UnixFiles.module.css'
 import UnixFilesTree from './UnixFilesTree'
 import UnixFileView from './UnixFileView'
 import Card from '../Layout/Card'
@@ -21,9 +20,24 @@ const UnixFiles = props => {
 
   const [fullEdit, setFullEdit] = useState(false)
 
+  useEffect (() => {
+    let defaultFilter = props.qpath;
+    defaultFilter = '/' + defaultFilter.replaceAll('^', '/')
+    const index = defaultFilter.lastIndexOf('/')
+    const parent = defaultFilter.substring(0, index)
+    const file = defaultFilter.substring(index)
+    fileSelected(parent, file)
+  }, [props.qpath])
 
   const fileSelected = (path, name) => {
-    const qualifiedFile = path + name
+    let qualifiedFile = path;
+    if (qualifiedFile.endsWith('/') || name.startsWith('/')){
+      qualifiedFile += name
+    }
+    else {
+      qualifiedFile += '/' + name
+    }
+ 
     console.log('file selected:' + qualifiedFile)
     setSelectedFile(qualifiedFile)
   }
@@ -31,8 +45,6 @@ const UnixFiles = props => {
   const onToggleFullEdit = () => {
     setFullEdit(!fullEdit)
   }
-
-  const layoutStyle = fullEdit ? {} : { display: 'grid', gridTemplateColumns: '1fr 2fr' }
 
   return (
     <section className="flex flex-col">

@@ -24,9 +24,6 @@ const UnixFileView = props => {
   const hasContent = path !== null && path.length > 0
 
   useEffect(() => {
-    if (!hasContent) {
-      return
-    }
     console.log('path=' + path)
 
     const callFetchFileContent = async () => {
@@ -34,6 +31,7 @@ const UnixFileView = props => {
       const data = await response.json()
       const fileContent = data.content
       setContent(fileContent)
+      localStorage.setItem('unixFilePath', path)
     }
 
     callFetchFileContent()
