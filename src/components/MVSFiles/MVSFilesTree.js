@@ -36,25 +36,44 @@ const sortFunction = (a, b) => {
 const MVSFilesTree = props => {
   const pathRef = useRef()
   const authCtx = useContext(AuthContext)
+  let autoExpand = false
 
   let defaultExpandedKeys = []
 
-  let defaultFilter = localStorage.getItem('lastMVSQuery')
-  if (defaultFilter === null || defaultFilter.length === 0) {
-    defaultFilter = authCtx.userId + '.*'
+  /*
+  else {
+    const lastFilter = localStorage.getItem('lastMVSQuery')
+    console.log('lastfilter='+lastFilter)
+    if (lastFilter !== null && lastFilter.length > 0){
+      defaultFilter = lastFilter;
+    }
   }
-
-  let autoExpand = false
-  if (props.container !== null && props.container.length > 0) {
-    defaultFilter = props.container // passed in via url
-    defaultExpandedKeys.concat(defaultFilter)
-    autoExpand = true
-    console.log('auto expand')
-  }
+  */
 
   const [autoExpandParent, setAutoExpandParent] = useState(autoExpand)
+  const [defaultFilter, setDefaultFilter] =  useState( () => {
+    let defaultFilter = authCtx.userId + '.*'
+    if (props.container) {
+      console.log('props.container='+props.container)
+      defaultFilter = props.container // passed in via url
+      defaultExpandedKeys.concat(defaultFilter)
+      autoExpand = true
+      console.log('auto expand')
+    }
+    else {
+      const lastFilter = localStorage.getItem('lastMVSQuery')
+      console.log('lastfilter='+lastFilter)
+      if (lastFilter !== null && lastFilter.length > 0){
+        defaultFilter = lastFilter;
+      }
+    }
+    return defaultFilter
+  })
+
   const [path, setPath] = useState(defaultFilter)
+
   const [fetchedFiles, setFetchedFiles] = useState([])
+
 
   useEffect(() => {
     console.log('mvs tree=' + path)
@@ -77,7 +96,7 @@ const MVSFilesTree = props => {
     }
 
     callFetchFiles()
-  }, [path, props.container, authCtx])
+  }, [path, props.container, defaultFilter, authCtx])
 
   const onDragStart = info => {
     console.log('onDragStart', info)

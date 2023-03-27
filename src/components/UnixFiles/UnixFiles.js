@@ -6,23 +6,21 @@ import Card from '../Layout/Card'
 
 const UnixFiles = props => {
   const [selectedFile, setSelectedFile] = useState('')
-  const [selectedContainer, setSelectedContainer] = useState('')
+  const [selectedContainer, setSelectedContainer] = useState( () => {
+    let defaultFilter = props.qpath
+    if (defaultFilter) {
+      console.log('props.qpath='+props.qpath)
+      defaultFilter = props.qpath // passed in via url
+      defaultFilter = defaultFilter.replaceAll('^', '/')
+
+      const index = defaultFilter.lastIndexOf('/')
+      defaultFilter = defaultFilter.substring(0, index)
+    }
+    return defaultFilter
+  })
+
   const [fullEdit, setFullEdit] = useState(false)
 
-  useEffect(() => {
-    let qpath = '/' + props.qpath
-    if (qpath) {
-      qpath = qpath.replaceAll('^', '/')
-
-      console.log('qpath=' + qpath)
-      setSelectedFile(qpath)
-
-      const index = qpath.lastIndexOf('/')
-      const container = qpath.substring(0, index)
-      console.log('container=' + container)
-      setSelectedContainer(container)
-    }
-  }, [props.qpath])
 
   const fileSelected = (path, name) => {
     const qualifiedFile = path + name

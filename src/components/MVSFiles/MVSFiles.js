@@ -6,25 +6,22 @@ import Card from '../Layout/Card'
 
 const MVSFiles = props => {
   const [selectedFile, setSelectedFile] = useState('')
-  const [selectedContainer, setSelectedContainer] = useState('')
-  const [fullEdit, setFullEdit] = useState(false)
+  const [selectedContainer, setSelectedContainer] = useState( () => {
+    let defaultFilter = props.qpath
+    if (defaultFilter) {
+      console.log('props.qpath='+props.qpath)
+      defaultFilter = props.qpath // passed in via url
+      defaultFilter = defaultFilter.replaceAll('_', '/').toUpperCase()
 
-  useEffect(() => {
-    let qpath = props.qpath
-    if (qpath) {
-      qpath = qpath.replaceAll('_', '/').toUpperCase()
-
-      console.log('qpath=' + qpath)
-      setSelectedFile(qpath)
-
-      if (qpath.includes('(')) {
-        const index = qpath.indexOf('(')
-        const container = qpath.substring(0, index)
-        console.log('container=' + container)
-        setSelectedContainer(container)
+      if (defaultFilter.includes('(')) {
+        const index = defaultFilter.indexOf('(')
+        defaultFilter = defaultFilter.substring(0, index)
       }
     }
-  }, [props.qpath])
+    return defaultFilter
+  })
+
+  const [fullEdit, setFullEdit] = useState(false)
 
   const fileSelected = path => {
     console.log('file selected:' + path)
@@ -37,6 +34,7 @@ const MVSFiles = props => {
 
   const layoutStyle = fullEdit ? {} : { display: 'grid', gridTemplateColumns: '1fr 2fr' }
 
+  console.log('selectedContainer='+selectedContainer)
   return (
  
   <section className="flex flex-col">

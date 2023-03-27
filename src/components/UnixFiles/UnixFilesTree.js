@@ -63,6 +63,8 @@ const UnixFilesTree = props => {
         const data = await response.json()
         console.log('unix query response data:' + data)
         const transformedResults = data.children.map(fileData => {
+          console.log('file.name='+fileData.name)
+          console.log('file.type='+fileData.type)
           let keyValue = path + fileData.name
           return {
             parent: path,
@@ -71,7 +73,7 @@ const UnixFilesTree = props => {
             type: fileData.type,
             size: fileData.size,
             archive: null,
-            children: [getPendingChild(fileData.link)],
+            children: (fileData.type === 'DIRECTORY') ? [getPendingChild(fileData.link)] : null,
             lastModified: fileData.lastModified,
           }
         })
@@ -155,52 +157,23 @@ const UnixFilesTree = props => {
 
       let relPath = '/'
       console.log('nodePath='+nodePath)
-      let isArchiveResource = node.type === 'ARCHIVE';// || node.archive !== null;
 
-      if (isArchiveResource){
-        if (node.type === 'ARCHIVE'){
-          response = await fetchArchiveFiles(nodePath, relPath, authCtx)
-        }
-        else {
-          response = await fetchArchiveFiles(node.archive, node.name, authCtx)
-        }
-      }
-      else {
-        response = await fetchFiles(nodePath, authCtx)
-      }
+      response = await fetchFiles(nodePath, authCtx)
+
       const data = await response.json()
+      /*
       if (!data.children) {
         node.children = null
         node.type = 'DIRECTORY'
         setFetchedFiles(updatedFiles)
         return
       }
-
+*/
 
       const transformedResults = data.children.map(fileData => {
         let fileKey = nodePath + fileData.name;
         let parentPath = nodePath;
-        if (isArchiveResource){
-          if (fileData.type === 'DIRECTORY'){
-            fileData.type = 'VIRTUAL_DIRECTORY'
-          }
-          if (node.archive !== null){
-            fileData.archive = node.archive;
-          }
-          else {
-            fileData.archive = nodePath;
-          }
-          fileKey = fileData.archive + '/' + fileData.name;
-          parentPath = '/'
-        }
-        else {
-          if (fileData.name.endsWith('zip') || fileData.name.endsWith('jar')){
-           fileData.type = 'ARCHIVE'
-         }
-         else {
-          fileData.archive = null;
-         }
-        }
+
 
         return {
           parent: parentPath,
@@ -208,7 +181,7 @@ const UnixFilesTree = props => {
           title: fileData.name,
           type: fileData.type,
           size: fileData.size,
-          children: (fileData.type === 'DIRECTORY' || fileData.type === 'ARCHIVE' || fileData.type === 'VIRTUAL_DIRECTORY') ? [getPendingChild(fileData.link)] : null,
+          children: (fileData.type === 'DIRECTORY') ? [getPendingChild(fileData.link)] : null,
           lastModified: fileData.lastModified,
         }
       })
