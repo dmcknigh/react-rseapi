@@ -11,12 +11,17 @@ const MVSFileView = props => {
   const authCtx = useContext(AuthContext)
 
   let path = props.selected
-  if (path === null || path.length === 0) {
+  if (path === null || path === '/undefined' || path.length === 0) {
     // pick up historic one
     path = localStorage.getItem('mvsFilePath')
+    if (!path){
+      path = null
+    }
   } else {
     localStorage.setItem('mvsFilePath', path) // store historic one
   }
+
+  console.log('path is ' + path)
   const hasContent = path !== null && path.length > 0
 
   useEffect(() => {
