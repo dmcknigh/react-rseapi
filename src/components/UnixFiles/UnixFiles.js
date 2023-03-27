@@ -11,7 +11,7 @@ const UnixFiles = props => {
     if (defaultFilter) {
       console.log('props.qpath='+props.qpath)
       defaultFilter = props.qpath // passed in via url
-      defaultFilter = defaultFilter.replaceAll('^', '/')
+      defaultFilter = '/' + defaultFilter.replaceAll('^', '/')
 
       const index = defaultFilter.lastIndexOf('/')
       defaultFilter = defaultFilter.substring(0, index)
