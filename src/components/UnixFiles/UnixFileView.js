@@ -43,17 +43,35 @@ const UnixFileView = props => {
   const onContentChange = event => {
     // save to uss
   }
+  function unsecuredCopyToClipboard(text) {
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    try {
+      document.execCommand('copy');
+    } catch (err) {
+      console.error('Unable to copy to clipboard', err);
+    }
+    document.body.removeChild(textArea);
+  }
 
   const onShareSelected = event => {
     console.log('onShareSelected')
+
     const urlBase = window.location.origin
-
     let sharePath = path.substring(1).replaceAll('/', '^')
-
     let fullPath = urlBase + '/unixfiles/' + sharePath
 
     console.log('fullpath=' + fullPath)
-    navigator.clipboard.writeText(fullPath)
+    if (window.isSecureContext){ // allowed to do this?
+      navigator.clipboard.writeText(fullPath)
+    }
+    else {
+      // insecure hack
+      unsecuredCopyToClipboard(fullPath)
+    }
   }
 
   return (
