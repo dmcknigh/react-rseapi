@@ -43,12 +43,11 @@ const UnixFileView = props => {
   const onContentChange = event => {
     // save to uss
   }
-  function unsecuredCopyToClipboard(text) {
+
+  const unsecuredCopyToClipboard = (text) => {
     const textArea = document.createElement('textarea');
     textArea.value = text;
     document.body.appendChild(textArea);
-    textArea.focus();
-    textArea.select();
     try {
       document.execCommand('copy');
     } catch (err) {
@@ -65,10 +64,12 @@ const UnixFileView = props => {
     let fullPath = urlBase + '/unixfiles/' + sharePath
 
     console.log('fullpath=' + fullPath)
+
     if (window.isSecureContext){ // allowed to do this?
       navigator.clipboard.writeText(fullPath)
     }
-    else {
+    else
+    {
       // insecure hack
       unsecuredCopyToClipboard(fullPath)
     }
