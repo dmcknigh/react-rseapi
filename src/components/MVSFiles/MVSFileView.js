@@ -3,6 +3,7 @@ import Card from '../Layout/Card'
 import { fetchFileContent } from '../../util/mvs-file-service'
 import AuthContext from '../../store/auth-context'
 import TextArea from '../Layout/TextArea'
+import { unsecuredCopyToClipboard } from '../../util/common-util'
 import classes from './MVSFiles.module.css'
 
 const MVSFileView = props => {
@@ -41,18 +42,6 @@ const MVSFileView = props => {
 
   const onContentChange = event => {}
 
-
-  const unsecuredCopyToClipboard = (text) => {
-    const textArea = document.createElement('textarea');
-    textArea.value = text;
-    document.body.appendChild(textArea);
-    try {
-      document.execCommand('copy');
-    } catch (err) {
-      console.error('Unable to copy to clipboard', err);
-    }
-    document.body.removeChild(textArea);
-  }
 
   const onShareSelected = event => {
     console.log('onShareSelected')

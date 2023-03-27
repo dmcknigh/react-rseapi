@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import Card from '../Layout/Card'
 import { fetchJobFileContent } from '../../util/jobs-service'
+import { unsecuredCopyToClipboard } from '../../util/common-util'
 import AuthContext from '../../store/auth-context'
 import TextArea from '../Layout/TextArea'
 import classes from './Jobs.module.css'
@@ -62,18 +63,6 @@ const JobView = props => {
   const onContentChange = event => {}
 
 
-  const unsecuredCopyToClipboard = (text) => {
-    const textArea = document.createElement('textarea');
-    textArea.value = text;
-    document.body.appendChild(textArea);
-    try {
-      document.execCommand('copy');
-    } catch (err) {
-      console.error('Unable to copy to clipboard', err);
-    }
-    document.body.removeChild(textArea);
-  }
-
   const onShareSelected = event => {
     console.log('onShareSelected')
 
@@ -84,11 +73,12 @@ const JobView = props => {
     let fullPath = urlBase + '/jobs/' + sharePath
 
     console.log('fullpath=' + fullPath)
-
+/*
     if (window.isSecureContext){ // allowed to do this?
       navigator.clipboard.writeText(fullPath)
     }
     else
+    */
     {
       // insecure hack
       unsecuredCopyToClipboard(fullPath)

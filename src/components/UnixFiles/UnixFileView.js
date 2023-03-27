@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react'
-import Card from '../Layout/Card'
 import { fetchFileContent } from '../../util/file-service'
 import AuthContext from '../../store/auth-context'
 import TextArea from '../Layout/TextArea'
-import classes from './UnixFiles.module.css'
+import { unsecuredCopyToClipboard } from '../../util/common-util'
 
 const UnixFileView = props => {
   const [content, setContent] = useState('')
@@ -44,17 +43,6 @@ const UnixFileView = props => {
     // save to uss
   }
 
-  const unsecuredCopyToClipboard = (text) => {
-    const textArea = document.createElement('textarea');
-    textArea.value = text;
-    document.body.appendChild(textArea);
-    try {
-      document.execCommand('copy');
-    } catch (err) {
-      console.error('Unable to copy to clipboard', err);
-    }
-    document.body.removeChild(textArea);
-  }
 
   const onShareSelected = event => {
     console.log('onShareSelected')
