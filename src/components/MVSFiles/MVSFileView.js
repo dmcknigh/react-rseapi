@@ -41,18 +41,37 @@ const MVSFileView = props => {
 
   const onContentChange = event => {}
 
+
+  const unsecuredCopyToClipboard = (text) => {
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    document.body.appendChild(textArea);
+    try {
+      document.execCommand('copy');
+    } catch (err) {
+      console.error('Unable to copy to clipboard', err);
+    }
+    document.body.removeChild(textArea);
+  }
+
   const onShareSelected = event => {
     console.log('onShareSelected')
+
     const urlBase = window.location.origin
-
     let sharePath = path
-
     let fullPath = urlBase + '/mvsfiles/' + sharePath
 
     console.log('fullpath=' + fullPath)
-    navigator.clipboard.writeText(fullPath)
-  }
 
+    if (window.isSecureContext){ // allowed to do this?
+      navigator.clipboard.writeText(fullPath)
+    }
+    else
+    {
+      // insecure hack
+      unsecuredCopyToClipboard(fullPath)
+    }
+  }
   return (
     <Card>
       <div className={classes.control}>
