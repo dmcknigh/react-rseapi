@@ -12,7 +12,8 @@ const Jobs = props => {
 
   useEffect(() => {
     if (props.qpath) {
-      let qpath = props.qpath.replace('_', ':').replace('_', '/')
+      let qpath = props.qpath.replaceAll('^', '/')
+      //  let qpath = props.qpath.replace('_', ':').replace('_', '/')
 
       console.log('qpath=' + qpath)
       jobFileSelected(qpath)
@@ -21,8 +22,13 @@ const Jobs = props => {
 
   const jobFileSelected = jobSpoolKey => {
     console.log('spool key=' + jobSpoolKey)
-    const [jobKey, spoolId] = jobSpoolKey.split('/')
-    const [jobName, jobId] = jobKey.split(':')
+    // const [jobKey, spoolId] = jobSpoolKey.split('/')
+    // const [jobName, jobId] = jobKey.split(':')
+    const [jobName, jobId, spoolId] = jobSpoolKey.split('/')
+
+    console.log('jobName='+jobName)
+    console.log('jobId='+jobId)
+    console.log('spoolId='+spoolId)
 
     setSelectedJobName(jobName)
     setSelectedJobId(jobId)

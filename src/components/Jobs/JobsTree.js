@@ -50,7 +50,7 @@ const JobsTree = props => {
       const transformedResults = data.items.map(jobData => {
         console.log('job id=' + jobData.jobId)
         console.log('job status='+jobData.status)
-        const title = jobData.jobName + ':' + jobData.jobId
+        const title = jobData.jobName + '/' + jobData.jobId
         let icon = <FcServices />
         if (jobData.status==='COMPLETED'){
           icon = <FcOk />
@@ -101,7 +101,7 @@ const JobsTree = props => {
     console.log('len=' + len)
     const key = expandedKeys[len - 1]
 
-    const [jobName, jobId] = key.split(':')
+    const [jobName, jobId] = key.split('/')
     const updatedJobs = [...fetchedJobs]
 
     const node = findNodeFromKey(key, updatedJobs)
@@ -113,7 +113,7 @@ const JobsTree = props => {
         console.log('spool dsName=' + jobSpoolData.dsName)
         console.log('spool id=' + jobSpoolData.id)
         return {
-          key: jobName + ':' + jobId + '/' + jobSpoolData.id,
+          key: jobName + '/' + jobId + '/' + jobSpoolData.id,
           icon: <FcDocument />,
           type: 'SPOOL',
           jobId: jobId,

@@ -78,7 +78,9 @@ const JobView = props => {
     console.log('onShareSelected')
 
     const urlBase = window.location.origin
-    let sharePath = displayedPath
+    //  let sharePath = displayedPath
+    // let sharePath = displayedPath.replace('/', ':').replace('/', '^')
+    let sharePath = displayedPath.replaceAll('/', '^')
     let fullPath = urlBase + '/jobs/' + sharePath
 
     console.log('fullpath=' + fullPath)
