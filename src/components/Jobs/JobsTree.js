@@ -33,6 +33,16 @@ const JobsTree = props => {
   const [enteredPrefix, setEnteredPrefix] = useState(defaultPrefixFilter)
 
   const [fetchedJobs, setFetchedJobs] = useState([])
+
+  // from passed in props
+  if (props.selJobOwner){
+    defaultOwnerFilter = props.setJobOwner
+  }
+  if (props.selJobName) {
+    defaultPrefixFilter = props.selJobName
+  }
+
+
   useEffect(() => {
     console.log('jobs owner' + enteredOwner)
     const callFetchJobs = async () => {
