@@ -25,9 +25,12 @@ const MVSFiles = props => {
 
   useEffect (() => {
     let defaultFilter = props.qpath;
-    defaultFilter = defaultFilter.replaceAll('_', '/').toUpperCase()
+    if (defaultFilter){
+      defaultFilter = defaultFilter.replaceAll('_', '/').toUpperCase()
+      fileSelected(defaultFilter)
+    }
 
-    fileSelected(defaultFilter)
+    
   }, [props.qpath])
 
   const fileSelected = path => {

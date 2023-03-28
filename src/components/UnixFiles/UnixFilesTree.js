@@ -82,6 +82,7 @@ const UnixFilesTree = props => {
         localStorage.setItem('lastUNIXQuery', path)
       } catch (error) {
         console.log('error: ' + error)
+        return <Navigate replace to="/auth" />;
       }
     }
 
