@@ -21,14 +21,14 @@ const UnixFiles = props => {
   const [fullEdit, setFullEdit] = useState(false)
 
   useEffect (() => {
-    let defaultFilter = props.qpath;
-    if (defaultFilter.contains('^')){
+    let defaultFilter = props.qpath; 
+    if (defaultFilter){
       defaultFilter = '/' + defaultFilter.replaceAll('^', '/')
+      const index = defaultFilter.lastIndexOf('/')
+      const parent = defaultFilter.substring(0, index)
+      const file = defaultFilter.substring(index)
+      fileSelected(parent, file)
     }
-    const index = defaultFilter.lastIndexOf('/')
-    const parent = defaultFilter.substring(0, index)
-    const file = defaultFilter.substring(index)
-    fileSelected(parent, file)
   }, [props.qpath])
 
   const fileSelected = (path, name) => {
