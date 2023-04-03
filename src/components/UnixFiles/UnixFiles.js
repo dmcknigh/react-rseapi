@@ -22,7 +22,9 @@ const UnixFiles = props => {
 
   useEffect (() => {
     let defaultFilter = props.qpath;
-    defaultFilter = '/' + defaultFilter.replaceAll('^', '/')
+    if (defaultFilter.contains('^')){
+      defaultFilter = '/' + defaultFilter.replaceAll('^', '/')
+    }
     const index = defaultFilter.lastIndexOf('/')
     const parent = defaultFilter.substring(0, index)
     const file = defaultFilter.substring(index)
