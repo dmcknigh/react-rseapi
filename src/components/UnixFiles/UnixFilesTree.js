@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext, useRef } from 'react'
 import Tree from 'rc-tree'
 import 'rc-tree/assets/index.css'
 import AuthContext from '../../store/auth-context'
-import { fetchFiles, fetchArchiveFiles } from '../../util/file-service'
+import { fetchFiles } from '../../util/file-service'
 import classes from './UnixFiles.module.css'
 
 const getPendingChild = keyValue => {
