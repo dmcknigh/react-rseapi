@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom'
 import Jobs from '../components/Jobs/Jobs'
 
 const JobsPage = () => {
-  console.log('jobs page')
   const params = useParams()
 
   const { resourceId } = params
