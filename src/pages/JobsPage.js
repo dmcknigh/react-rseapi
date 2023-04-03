@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Fragment } from 'react'
 import { useParams } from 'react-router-dom'
 import Jobs from '../components/Jobs/Jobs'
 

@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import classes from './MVSFiles.module.css'
 import MVSFilesTree from './MVSFilesTree'
 import MVSFileView from './MVSFileView'
 import Card from '../Layout/Card'
